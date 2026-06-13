@@ -22,6 +22,16 @@ app.post('/webhook', (req, res) => {
           messages.forEach(msg => {
             console.log('From:', msg.from);
             console.log('Message:', msg.text?.body);
+            fetch('https://hook.eu1.make.com/uth6xybioxmqptlnnpsf5sgq3ecytb98', {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify({
+    from: msg.from,
+    message: msg.text?.body || '',
+    timestamp: msg.timestamp,
+    phone_number_id: change.value?.metadata?.phone_number_id
+  })
+}).catch(err => console.log('Make error:', err));
           });
         }
       });
